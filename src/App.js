@@ -1,46 +1,18 @@
 import React, { useState } from 'react';
-import { debounce } from 'lodash';
-import styles from './App.module.scss';
-import Gallery from './app/Gallery';
-import Search from './app/Search';
-
-const fetchImages = async (searchQuery, setGallery) => {
-  const response = await fetch(`http://api.giphy.com/v1/gifs/search?api_key=E4ChLnZqoVvB0fZXoi3DJjJqSQE2dp07&limit=8&q=${searchQuery}`);
-  if (response.status === 200) {
-    const result = await response.json();
-    setGallery(result.data);
-  }
-};
-
-const debounceFetchImages = debounce(fetchImages, 500);
-
-const onSearch = (setSearchQuery, setGallery) => (event) => {
-  const value = event.target.value;
-  setSearchQuery(value);
-
-  if (value) {
-    debounceFetchImages(value, setGallery);
-  }
-}
-
-const likeImage = (setFavouriteImages) => (imageId) => () => {
-  setFavouriteImages(oldFavouriteImages => oldFavouriteImages.concat([imageId]));
-}
+import Home from './app/Home';
+import Navigation from './app/Navigation';
+import Favourites from './app/Favourites';
 
 function App() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [gallery, setGallery] = useState([]);
+  const [path, setPath] = useState('/');
   const [favouriteImages, setFavouriteImages] = useState([]);
 
   return (
-    <div className={styles.page}>
-      <Search searchQuery={searchQuery} onSearch={onSearch(setSearchQuery, setGallery)} />
-      <Gallery
-        gallery={gallery}
-        favouriteImages={favouriteImages}
-        likeImage={likeImage(setFavouriteImages)}
-      />
-    </div>
+    <>
+      <Navigation setPath={setPath} />
+      {path === '/' && <Home favouriteImages={favouriteImages} setFavouriteImages={setFavouriteImages} />}
+      {path === '/favourites' && <Favourites favouriteImages={favouriteImages} />}
+    </>
   );
 }
 

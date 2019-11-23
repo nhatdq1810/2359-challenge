@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { debounce } from 'lodash';
 import styles from './App.module.scss';
+import Gallery from './app/Gallery';
+import Search from './app/Search';
 
-const fetchImages = (searchQuery, setGallery) => async () => {
+const fetchImages = async (searchQuery, setGallery) => {
   const response = await fetch(`http://api.giphy.com/v1/gifs/search?api_key=E4ChLnZqoVvB0fZXoi3DJjJqSQE2dp07&limit=8&q=${searchQuery}`);
   if (response.status === 200) {
     const result = await response.json();
@@ -10,9 +12,15 @@ const fetchImages = (searchQuery, setGallery) => async () => {
   }
 };
 
-const onSearch = (setSearchQuery) => (event) => {
+const debounceFetchImages = debounce(fetchImages, 500);
+
+const onSearch = (setSearchQuery, setGallery) => (event) => {
   const value = event.target.value;
   setSearchQuery(value);
+
+  if (value) {
+    debounceFetchImages(value, setGallery);
+  }
 }
 
 function App() {
@@ -21,15 +29,8 @@ function App() {
 
   return (
     <div className={styles.page}>
-      <input type="text" value={searchQuery} onChange={onSearch(setSearchQuery)} />
-      <button onClick={fetchImages(searchQuery, setGallery)}>click</button>
-      <div className={styles.gallery}>
-        {gallery.map((image) => (
-          <div key={image.id} className={styles.galleryItem}>
-            <img className={styles.galleryImage} src={image.images.original_still.url} alt={image.title} />
-          </div>
-        ))}
-      </div>
+      <Search searchQuery={searchQuery} onSearch={onSearch(setSearchQuery, setGallery)} />
+      <Gallery gallery={gallery} />
     </div>
   );
 }

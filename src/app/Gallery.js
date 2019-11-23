@@ -2,15 +2,19 @@ import React from 'react';
 import styles from './Gallery.module.scss';
 import HeartIcon from '../heart.svg';
 
-function Gallery({gallery}) {
+function Gallery({ gallery, likeImage, favouriteImages }) {
   return (
     <ul className={styles.gallery}>
       {gallery.map((image) => (
-        <li key={image.id} className={styles.galleryItem}>
-          <img className={styles.galleryImage} src={image.images.original_still.url} alt={image.title} />
-          <button className={styles.likeButton}>
+        <li key={image.id} className={styles.galleryItem} onClick={likeImage(image.id)}>
+          <img
+            className={styles.galleryImage}
+            src={image.images.original_still.url}
+            alt={image.title}
+          />
+          <div className={`${styles.favouriteIcon} ${favouriteImages.includes(image.id) ? styles.active : ''}`}>
             <img src={HeartIcon} alt="like icon" />
-          </button>
+          </div>
         </li>
       ))}
     </ul>

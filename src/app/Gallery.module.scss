@@ -14,8 +14,14 @@
     }
 
     &:hover {
-      .likeButton {
-        opacity: 1;
+      cursor: pointer;
+
+      .favouriteIcon {
+        opacity: 0.5;
+
+        &.active {
+          opacity: 1;
+        }
       }
     }
   }
@@ -25,17 +31,20 @@
   }
 }
 
-.likeButton {
+.favouriteIcon {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: 8px;
+  bottom: 4px;
   width: 40px;
   height: 40px;
+  opacity: 0;
+
+  &.active {
+    opacity: 1;
+  }
+}
+
+.likeButton {
   background: none;
   border: none;
-  opacity: 0.5;
-
-  &:hover {
-    cursor: pointer;
-  }
 }

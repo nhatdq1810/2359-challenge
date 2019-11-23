@@ -23,14 +23,23 @@ const onSearch = (setSearchQuery, setGallery) => (event) => {
   }
 }
 
+const likeImage = (setFavouriteImages) => (imageId) => () => {
+  setFavouriteImages(oldFavouriteImages => oldFavouriteImages.concat([imageId]));
+}
+
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [gallery, setGallery] = useState([]);
+  const [favouriteImages, setFavouriteImages] = useState([]);
 
   return (
     <div className={styles.page}>
       <Search searchQuery={searchQuery} onSearch={onSearch(setSearchQuery, setGallery)} />
-      <Gallery gallery={gallery} />
+      <Gallery
+        gallery={gallery}
+        favouriteImages={favouriteImages}
+        likeImage={likeImage(setFavouriteImages)}
+      />
     </div>
   );
 }

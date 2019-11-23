@@ -20,7 +20,7 @@ export default function Favourites({ favouriteImages }) {
 
   return (
     <>
-      {favouriteGallery.length === 0 && (<div>There is nothing here!</div>)}
+      {favouriteImages.length === 0 && (<div>There is nothing here!</div>)}
       <Gallery gallery={favouriteGallery} favouriteImages={favouriteImages} />
     </>
   )

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Search.module.scss';
 
-export default function Search({searchQuery, onSearch}) {
+export default function Search({ searchQuery, onSearch, isLoading }) {
   return (
     <div className={styles.searchArea}>
       <input
@@ -11,6 +11,7 @@ export default function Search({searchQuery, onSearch}) {
         value={searchQuery}
         onChange={onSearch}
       />
+      {isLoading && <span>Loading...</span>}
     </div>
   )
 }

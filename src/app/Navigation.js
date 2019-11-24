@@ -5,12 +5,17 @@ const navigateTo = (setPath, path) => () => {
   setPath(path);
 }
 
-export default function Navigation({ path, setPath }) {
+export default function Navigation({ path, setPath, favouriteImagesSize }) {
   return (
     <nav className={styles.wrapper}>
       <button onClick={navigateTo(setPath, '/')} className={styles.logo}>Galler<span>easy</span></button>
       <button onClick={navigateTo(setPath, '/')} className={`${path === '/' ? styles.active : ''}`}>Search</button>
-      <button onClick={navigateTo(setPath, '/favourites')} className={`${path === '/favourites' ? styles.active : ''}`}>Favourites</button>
+      <button
+        onClick={navigateTo(setPath, '/favourites')}
+        className={`${path === '/favourites' ? styles.active : ''}`}
+      >
+        Favourites{favouriteImagesSize !== 0 && ` (${favouriteImagesSize})`}
+      </button>
     </nav>
   )
 }

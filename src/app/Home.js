@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Home.module.scss';
 import Gallery from '../components/Gallery';
 import Search from './home/Search';
@@ -34,8 +34,15 @@ const onSearch = (setSearchQuery, setGallery, setIsLoading) => (event) => {
 
 function Home({ path, favouriteImages, likeImage }) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [gallery, setGallery] = useState([]);
+  const [gallery, setGallery] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [emptyMessage, setEmptyMessage] = useState();
+
+  useEffect(() => {
+    if (!emptyMessage && searchQuery && gallery && gallery.length === 0) {
+      setEmptyMessage('No images!');
+    }
+  }, [emptyMessage, gallery, searchQuery])
 
   if (path !== '/') return null;
 
@@ -47,6 +54,7 @@ function Home({ path, favouriteImages, likeImage }) {
         isLoading={isLoading}
       />
       <Gallery
+        emptyMessage={emptyMessage}
         gallery={gallery}
         favouriteImages={favouriteImages}
         likeImage={likeImage}

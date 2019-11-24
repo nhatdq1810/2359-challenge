@@ -1,3 +1,5 @@
+@import "src/styles/_variables.scss";
+
 .gallery {
   display: flex;
   flex-wrap: wrap;
@@ -47,4 +49,13 @@
 .likeButton {
   background: none;
   border: none;
+}
+
+.emptyState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: $main-text-color;
+  font-size: 32px;
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Home from './app/Home';
 import Navigation from './app/Navigation';
 import Favourites from './app/Favourites';
+import styles from './App.module.scss';
 
 const likeImage = (setFavouriteImages) => (favouriteImage) => () => {
   setFavouriteImages(
@@ -16,11 +17,11 @@ function App() {
   const [favouriteImages, setFavouriteImages] = useState([]);
 
   return (
-    <>
-      <Navigation path={path} setPath={setPath} />
+    <div className={styles.wrapper}>
+      <Navigation path={path} setPath={setPath} favouriteImagesSize={favouriteImages.length} />
       {<Home path={path} favouriteImages={favouriteImages} likeImage={likeImage(setFavouriteImages)} />}
       {<Favourites path={path} favouriteImages={favouriteImages} likeImage={likeImage(setFavouriteImages)} />}
-    </>
+    </div>
   );
 }
 

@@ -3,6 +3,14 @@ import Home from './app/Home';
 import Navigation from './app/Navigation';
 import Favourites from './app/Favourites';
 
+const likeImage = (setFavouriteImages) => (favouriteImage) => () => {
+  setFavouriteImages(
+    oldFavouriteImages => oldFavouriteImages.some(image => image.id === favouriteImage.id)
+      ? oldFavouriteImages.filter(image => image.id !== favouriteImage.id)
+      : oldFavouriteImages.concat([favouriteImage])
+  );
+}
+
 function App() {
   const [path, setPath] = useState('/');
   const [favouriteImages, setFavouriteImages] = useState([]);
@@ -10,8 +18,8 @@ function App() {
   return (
     <>
       <Navigation setPath={setPath} />
-      {path === '/' && <Home favouriteImages={favouriteImages} setFavouriteImages={setFavouriteImages} />}
-      {path === '/favourites' && <Favourites favouriteImages={favouriteImages} />}
+      {path === '/' && <Home favouriteImages={favouriteImages} likeImage={likeImage(setFavouriteImages)} />}
+      {path === '/favourites' && <Favourites favouriteImages={favouriteImages} likeImage={likeImage(setFavouriteImages)} />}
     </>
   );
 }

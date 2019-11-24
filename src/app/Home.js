@@ -32,15 +32,7 @@ const onSearch = (setSearchQuery, setGallery, setIsLoading) => (event) => {
   }
 }
 
-const likeImage = (setFavouriteImages) => (imageId) => () => {
-  setFavouriteImages(
-    oldFavouriteImages => oldFavouriteImages.includes(imageId)
-      ? oldFavouriteImages
-      : oldFavouriteImages.concat([imageId])
-  );
-}
-
-function Home({ favouriteImages, setFavouriteImages }) {
+function Home({ favouriteImages, likeImage }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [gallery, setGallery] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,7 +47,7 @@ function Home({ favouriteImages, setFavouriteImages }) {
       <Gallery
         gallery={gallery}
         favouriteImages={favouriteImages}
-        likeImage={likeImage(setFavouriteImages)}
+        likeImage={likeImage}
       />
     </div>
   );

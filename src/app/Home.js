@@ -2,60 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styles from './Home.module.scss';
 import Gallery from '../components/Gallery';
 import Search from './home/Search';
-import { searchImagesApi } from '../services/api';
-
-const fetchImages = async (searchQuery, setGallery, setIsLoading, setShowFetchMore) => {
-  let result = [];
-
-  setIsLoading(true);
-
-  const response = await fetch(searchImagesApi({ searchQuery, limit: 8, offset: 0 }));
-  if (response.status === 200) {
-    result = (await response.json()).data;
-
-    if(result.length > 0) {
-      setShowFetchMore(true);
-    }
-  }
-
-  setGallery(result);
-  setIsLoading(false);
-};
-
-let fetchImagesToken = null;
-
-const onSearch = (setSearchQuery, setGallery, setIsLoading, setShowFetchMore) => (event) => {
-  const value = event.target.value;
-  setSearchQuery(value);
-
-  if (fetchImagesToken) {
-    clearTimeout(fetchImagesToken);
-  }
-
-  if (value) {
-    fetchImagesToken = setTimeout(() => {
-      fetchImages(value, setGallery, setIsLoading, setShowFetchMore);
-    }, 500);
-  }
-}
-
-const onFetchMore = (gallery, searchQuery, setGallery, setShowFetchMore, setIsLoadingMore) => async () => {
-  let result = [];
-
-  setIsLoadingMore(true);
-
-  const response = await fetch(searchImagesApi({ searchQuery, limit: 8, offset: gallery.length }));
-  if (response.status === 200) {
-    result = (await response.json()).data;
-
-    if (result.length === 0) {
-      setShowFetchMore(false);
-    }
-  }
-
-  setGallery(oldGallery => oldGallery.concat(result));
-  setIsLoadingMore(false);
-}
 
 function Home({ path, favouriteImages, likeImage }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -77,7 +23,7 @@ function Home({ path, favouriteImages, likeImage }) {
     <div className={styles.page}>
       <Search
         searchQuery={searchQuery}
-        onSearch={onSearch(setSearchQuery, setGallery, setIsLoading, setShowFetchMore)}
+        onSearchProps={{ setSearchQuery, setGallery, setIsLoading, setShowFetchMore }}
         isLoading={isLoading}
       />
       <Gallery
@@ -85,7 +31,7 @@ function Home({ path, favouriteImages, likeImage }) {
         gallery={gallery}
         favouriteImages={favouriteImages}
         likeImage={likeImage}
-        onFetchMore={onFetchMore(gallery, searchQuery, setGallery, setShowFetchMore, setIsLoadingMore)}
+        onFetchMoreProps={{ gallery, searchQuery, setGallery, setShowFetchMore, setIsLoadingMore }}
         showFetchMore={showFetchMore}
         isLoadingMore={isLoadingMore}
       />

@@ -1,8 +1,30 @@
 import React from 'react';
 import styles from './Gallery.module.scss';
-import HeartIcon from '../heart.svg';
+import HeartIcon from '../assets/heart.svg';
+import { searchImagesApi } from '../services/api';
 
-function Gallery({ gallery, likeImage, favouriteImages, emptyMessage, onFetchMore, showFetchMore, isLoadingMore }) {
+const onFetchMore = ({ gallery, searchQuery, setGallery, setShowFetchMore, setIsLoadingMore }) => async () => {
+  let result = [];
+
+  setIsLoadingMore(true);
+
+  const response = await fetch(searchImagesApi({ searchQuery, limit: 8, offset: gallery.length }));
+  if (response.status === 200) {
+    result = (await response.json()).data;
+
+    if (result.length === 0) {
+      setShowFetchMore(false);
+    }
+  }
+
+  setGallery(oldGallery => oldGallery.concat(result));
+  setIsLoadingMore(false);
+}
+
+function Gallery({
+  gallery, likeImage, favouriteImages,
+  emptyMessage, onFetchMoreProps, showFetchMore, isLoadingMore
+}) {
   if (!gallery) return null;
 
   return (
@@ -24,9 +46,9 @@ function Gallery({ gallery, likeImage, favouriteImages, emptyMessage, onFetchMor
               </li>
             ))}
           </ul>
-          {showFetchMore && (
+          {showFetchMore && onFetchMoreProps && (
             <button
-              onClick={onFetchMore}
+              onClick={onFetchMore(onFetchMoreProps)}
               disabled={isLoadingMore}
               className={styles.fetchMoreButton}
             >

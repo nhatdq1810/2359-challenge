@@ -1,15 +1,16 @@
 import React from 'react';
+import styles from './Navigation.module.scss';
 
 const navigateTo = (setPath, path) => () => {
   setPath(path);
 }
 
-export default function Navigation({ setPath }) {
+export default function Navigation({ path, setPath }) {
   return (
-    <nav>
-      <button onClick={navigateTo(setPath, '/')}>Gallereasy</button>
-      <button onClick={navigateTo(setPath, '/')}>Search</button>
-      <button onClick={navigateTo(setPath, '/favourites')}>Favourites</button>
+    <nav className={styles.wrapper}>
+      <button onClick={navigateTo(setPath, '/')} className={styles.logo}>Galler<span>easy</span></button>
+      <button onClick={navigateTo(setPath, '/')} className={`${path === '/' ? styles.active : ''}`}>Search</button>
+      <button onClick={navigateTo(setPath, '/favourites')} className={`${path === '/favourites' ? styles.active : ''}`}>Favourites</button>
     </nav>
   )
 }

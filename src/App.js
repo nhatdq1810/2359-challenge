@@ -17,7 +17,7 @@ function App() {
 
   return (
     <>
-      <Navigation setPath={setPath} />
+      <Navigation path={path} setPath={setPath} />
       {path === '/' && <Home favouriteImages={favouriteImages} likeImage={likeImage(setFavouriteImages)} />}
       {path === '/favourites' && <Favourites favouriteImages={favouriteImages} likeImage={likeImage(setFavouriteImages)} />}
     </>

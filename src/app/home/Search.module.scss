@@ -1,3 +1,5 @@
+@import "src/styles/_variables.scss";
+
 .searchArea {
   display: flex;
   justify-content: center;
@@ -6,19 +8,19 @@
 
 .inputSearch {
   border: none;
-  border-bottom: 2px solid #dddddd;
+  border-bottom: 1px solid $light-text-color;
   width: 60%;
   height: 30px;
-  font-size: 20px;
+  font-size: 24px;
   outline: none;
 
   &:hover,
   &:active,
   &:focus {
-    border-bottom-color: grey;
+    border-bottom-color: $main-text-color;
   }
 
   &::placeholder {
-    color: #dddddd;
+    color: $light-text-color;
   }
 }

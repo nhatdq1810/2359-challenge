@@ -18,8 +18,8 @@ function App() {
   return (
     <>
       <Navigation path={path} setPath={setPath} />
-      {path === '/' && <Home favouriteImages={favouriteImages} likeImage={likeImage(setFavouriteImages)} />}
-      {path === '/favourites' && <Favourites favouriteImages={favouriteImages} likeImage={likeImage(setFavouriteImages)} />}
+      {<Home path={path} favouriteImages={favouriteImages} likeImage={likeImage(setFavouriteImages)} />}
+      {<Favourites path={path} favouriteImages={favouriteImages} likeImage={likeImage(setFavouriteImages)} />}
     </>
   );
 }

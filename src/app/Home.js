@@ -26,16 +26,18 @@ const onSearch = (setSearchQuery, setGallery, setIsLoading) => (event) => {
   }
 
   if (value) {
-    fetchImagesToken= setTimeout(() => {
+    fetchImagesToken = setTimeout(() => {
       fetchImages(value, setGallery, setIsLoading);
     }, 500);
   }
 }
 
-function Home({ favouriteImages, likeImage }) {
+function Home({ path, favouriteImages, likeImage }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [gallery, setGallery] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  if (path !== '/') return null;
 
   return (
     <div className={styles.page}>

@@ -11,7 +11,7 @@ export default function Search({ searchQuery, onSearch, isLoading }) {
         value={searchQuery}
         onChange={onSearch}
       />
-      {isLoading && <span>Loading...</span>}
+      {isLoading && <span className={styles.loadingIndicator}>Loading...</span>}
     </div>
   )
 }

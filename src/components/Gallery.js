@@ -46,13 +46,17 @@ function Gallery({
               </li>
             ))}
           </ul>
-          {showFetchMore && onFetchMoreProps && (
+          {onFetchMoreProps && (
             <button
               onClick={onFetchMore(onFetchMoreProps)}
-              disabled={isLoadingMore}
+              disabled={isLoadingMore || !showFetchMore}
               className={styles.fetchMoreButton}
             >
-              {isLoadingMore ? 'Loading...' : 'Fetch more'}
+              {isLoadingMore
+                ? 'Loading...'
+                : showFetchMore
+                  ? 'Fetch more'
+                  : 'No more'}
             </button>
           )}
         </>

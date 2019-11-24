@@ -74,10 +74,16 @@ describe('Gallery', () => {
     expect(fetchMoreButton.prop('disabled')).toBe(true);
     expect(fetchMoreButton.text()).toBe('Loading...');
 
-    wrapper.setProps({ isLoadingMore: false });
+    wrapper.setProps({ showFetchMore:true, isLoadingMore: false });
     fetchMoreButton = wrapper.find('.fetchMoreButton');
 
     expect(fetchMoreButton.prop('disabled')).toBe(false);
     expect(fetchMoreButton.text()).toBe('Fetch more');
+
+    wrapper.setProps({ showFetchMore: false, isLoadingMore: false });
+    fetchMoreButton = wrapper.find('.fetchMoreButton');
+
+    expect(fetchMoreButton.prop('disabled')).toBe(true);
+    expect(fetchMoreButton.text()).toBe('No more');
   });
 });

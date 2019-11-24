@@ -7,7 +7,7 @@ function Gallery({ gallery, likeImage, favouriteImages, emptyMessage }) {
 
   return (
     gallery.length === 0
-      ? (emptyMessage && <div className={styles.emptyState}>{emptyMessage}</div>)
+      ? (<div className={styles.emptyState}>{emptyMessage}</div>)
       : <ul className={styles.gallery}>
         {gallery.map((image) => (
           <li key={image.id} className={styles.galleryItem} onClick={likeImage(image)}>

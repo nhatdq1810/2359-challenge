@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Gallery.module.scss';
 import HeartIcon from '../heart.svg';
 
-function Gallery({ gallery, likeImage, favouriteImages, emptyMessage }) {
+function Gallery({ gallery, likeImage, favouriteImages, emptyMessage, onFetchMore, showFetchMore }) {
   if (!gallery) return null;
 
   return (
@@ -21,6 +21,7 @@ function Gallery({ gallery, likeImage, favouriteImages, emptyMessage }) {
             </div>
           </li>
         ))}
+        {showFetchMore && <div><button onClick={onFetchMore}>Fetch more</button></div>}
       </ul>
   )
 }

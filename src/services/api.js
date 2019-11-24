@@ -7,7 +7,7 @@ const searchImagesApi = ({ searchQuery, limit, offset }) =>
   }&limit=${
   limit
   }&q=${
-  searchQuery
+  encodeURIComponent(searchQuery)
   }`;
 
 export { searchImagesApi };

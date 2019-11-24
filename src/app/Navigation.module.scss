@@ -11,10 +11,6 @@
     color: $light-text-color;
     padding: 0 8px;
 
-    &:hover {
-      cursor: pointer;
-    }
-
     &:hover,
     &.active {
       color: $main-text-color;

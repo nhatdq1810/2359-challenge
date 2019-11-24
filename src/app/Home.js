@@ -39,8 +39,10 @@ const onSearch = (setSearchQuery, setGallery, setIsLoading, setShowFetchMore) =>
   }
 }
 
-const onFetchMore = (gallery, searchQuery, setGallery, setShowFetchMore) => async () => {
+const onFetchMore = (gallery, searchQuery, setGallery, setShowFetchMore, setIsLoadingMore) => async () => {
   let result = [];
+
+  setIsLoadingMore(true);
 
   const response = await fetch(searchImagesApi({ searchQuery, limit: 8, offset: gallery.length }));
   if (response.status === 200) {
@@ -52,6 +54,7 @@ const onFetchMore = (gallery, searchQuery, setGallery, setShowFetchMore) => asyn
   }
 
   setGallery(oldGallery => oldGallery.concat(result));
+  setIsLoadingMore(false);
 }
 
 function Home({ path, favouriteImages, likeImage }) {
@@ -60,6 +63,7 @@ function Home({ path, favouriteImages, likeImage }) {
   const [isLoading, setIsLoading] = useState(false);
   const [emptyMessage, setEmptyMessage] = useState();
   const [showFetchMore, setShowFetchMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   useEffect(() => {
     if (!emptyMessage && searchQuery && gallery && gallery.length === 0) {
@@ -81,8 +85,9 @@ function Home({ path, favouriteImages, likeImage }) {
         gallery={gallery}
         favouriteImages={favouriteImages}
         likeImage={likeImage}
-        onFetchMore={onFetchMore(gallery, searchQuery, setGallery, setShowFetchMore)}
+        onFetchMore={onFetchMore(gallery, searchQuery, setGallery, setShowFetchMore, setIsLoadingMore)}
         showFetchMore={showFetchMore}
+        isLoadingMore={isLoadingMore}
       />
     </div>
   );

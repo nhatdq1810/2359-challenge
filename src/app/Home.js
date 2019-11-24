@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import styles from './Home.module.scss';
 import Gallery from '../components/Gallery';
 import Search from './home/Search';
+import { searchImagesApi } from '../services/api';
 
 const fetchImages = async (searchQuery, setGallery, setIsLoading) => {
+  let result = [];
+
   setIsLoading(true);
 
-  const response = await fetch(`http://api.giphy.com/v1/gifs/search?api_key=E4ChLnZqoVvB0fZXoi3DJjJqSQE2dp07&limit=8&q=${searchQuery}`);
+  const response = await fetch(searchImagesApi({searchQuery, limit: 8, offset: 0}));
   if (response.status === 200) {
-    const result = await response.json();
-    setGallery(result.data);
+    result = (await response.json()).data;
   }
 
+  setGallery(result);
   setIsLoading(false);
 };
 
